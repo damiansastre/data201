@@ -5,6 +5,7 @@ get_filename <- function(filename){
     return(paste(DATASET_FOLDER, filename, sep='/'))
 }
 
+
 get_moh_file_data <- function(){
      mental_health_data_urls_all_new_years <- 'https://www.health.govt.nz/our-work/mental-health-and-addiction/mental-health-and-addiction-monitoring-reporting-and-data' %>% 
                                         read_html() %>%
@@ -42,12 +43,19 @@ get_moh_file_data <- function(){
                                                      file_name=c('mental_health2011.xlsx',
                                                                  'mental_health2012.xlsx',
                                                                  'mental_health2013.xlsx'),
-                                                     url=NA,
+                                            url=c('https://www.health.govt.nz/system/files/documents/publications/mh_201011_revised_mar2020.xlsx','https://www.health.govt.nz/publication/mental-health-and-addiction-service-use-2011-12', 'https://www.health.govt.nz/publication/mental-health-and-addiction-service-use-2012-13'),
                                                      separator='&')
+    get_unknown_years(file_metadata_df %>% filter(year<=2013))
 
     return(file_metadata_df)
 }
 
+get_unknown_years <- function(unknown_years){
+    for (extra_file in unknown_years){
+        print(extra_file)
+        download_xlsx_file(extra_file$url, extra_file$file_name)
+    }
+}
 download_xlsx_file <- function(heath_url, file_name){
     download_url <- heath_url %>% 
                     read_html() %>%
@@ -79,15 +87,29 @@ get_table_positions <- function(file_metadata_df){
     #get metadata from one of the files.
     first_file = file_metadata_df[1,]
 
-    age_group_col_names <-  first_file$file_name %>% read_excel(sheet = build_sheet_name('table1', '2', first_file$separator),
-                                                                range = cell_rows(4:4)) %>% colnames()
-    add_sex_totl_age_group_col_names <- c('gender', "Total", age_group_col_names)
+    age_group_col_names <- paste(DATASET_FOLDER, first_file$file_name, sep='/') %>% read_excel(sheet=build_sheet_name('table1', 
+                                                                                                                      '2',
+                                                                                                                      first_file$separator),
+                                                                                               range=cell_rows(4:4)) %>% 
+                                                                                    colnames()
 
 
     table_1_2_positions <- tibble(ethnic_group=c('Maori', 'Pacific', 'Asian', 'Other'),
                                   range=c('B9:U10', 'B12:U13', 'B15:U16', 'B18:U19'))
     
     return(table_1_2_positions)
+}
+
+get_age_column_names_table1 <- function(file_metadata_df){
+        first_file = file_metadata_df[1,]
+        age_group_col_names <-   paste(DATASET_FOLDER, first_file$file_name, sep='/') %>% read_excel(sheet=build_sheet_name('table1', 
+                                                                                                                        '2',
+                                                                                                                        first_file$separator),
+                                                                                                 range=cell_rows(4:4) )%>% 
+                                                                                  colnames()
+        add_sex_totl_age_group_col_names <- c('gender', "Total", age_group_col_names)
+
+        return (add_sex_totl_age_group_col_names)
 }
 
 #get data from 2010 file for spcific sheet range etc.
@@ -135,9 +157,9 @@ get_clients_by_gender_ethnic_group <- function(file_metadata, table_positions, c
             sheet <- build_sheet_name("table1", "2", file_metadata$separator)
            
         }
-        ethnic_group_df <- file_metadata$file_name %>% read_excel(sheet=sheet,
+        ethnic_group_df <- paste(DATASET_FOLDER, file_metadata$file_name, sep='/') %>% read_excel(sheet=sheet,
                                                        range = range,
-                                                       col_names = add_sex_totl_age_group_col_names)  
+                                                       col_names = columns)  
         
         ethnic_group_df <- ethnic_group_df %>% add_column(ethnic_group=row$ethnic_group, year=file_metadata$year)
         
@@ -154,17 +176,32 @@ get_clients_by_gender_ethnic_group <- function(file_metadata, table_positions, c
 
 get_all_year_clients_by_gender_ethnic_group <- function(clients_by_age_ethnic_group_df, file_metadata_df){
     table_positions <- get_table_positions(file_metadata_df)
+    age_group_col_names = get_age_column_names_table1(file_metadata_df)
     for (i in 1:nrow(file_metadata_df)){
         row <- file_metadata_df[i,]
         clients_by_age_ethnic_group_df <- clients_by_age_ethnic_group_df %>% 
                                           add_row(get_clients_by_gender_ethnic_group(row,
                                                                                      table_positions,
-                                                                                     add_sex_totl_age_group_col_names))
+                                                                                     age_group_col_names))
     }
     return(clients_by_age_ethnic_group_df) 
     
 }
 
+# 2010 File is different to every other file, so we need a different parser for it.
+
+get_2010_client_ages <- function(){
+        file_2010 <- paste(DATASET_FOLDER, "mental_health2010.xls", sep='/')
+
+        client_ages_group_2010 <- file_2010 %>% read_excel(sheet = "T7 Nos Rates 0910 EthSexAge",  range='A4:A22') 
+        colnames(client_ages_group_2010) <- c('age_group')
+
+        data_2010_clients <- get_2010_dfs(file_2010, "T7 Nos Rates 0910 EthSexAge", 'B4:B22', 'Male', 'Maori', client_ages_group_2010 ) %>% 
+                                rbind(get_2010_dfs(file_2010, "T7 Nos Rates 0910 EthSexAge", 'D4:D22', 'Female', 'Maori', client_ages_group_2010 )) %>% 
+                                rbind(get_2010_dfs(file_2010, "T7 Nos Rates 0910 EthSexAge", 'H4:H22', 'Male', 'Unknown', client_ages_group_2010 )) %>% 
+                                rbind(get_2010_dfs(file_2010, "T7 Nos Rates 0910 EthSexAge", 'H4:H22', 'Female', 'Unknown', client_ages_group_2010 )) %>% 
+                                mutate('year'=2010)
+}
 
 
 #make all df 2002-2007 data tidy

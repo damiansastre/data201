@@ -5,6 +5,7 @@ get_filename <- function(filename){
     return(paste(DATASET_FOLDER, filename, sep='/'))
 }
 
+
 get_moh_file_data <- function(){
      mental_health_data_urls_all_new_years <- 'https://www.health.govt.nz/our-work/mental-health-and-addiction/mental-health-and-addiction-monitoring-reporting-and-data' %>% 
                                         read_html() %>%
@@ -42,12 +43,42 @@ get_moh_file_data <- function(){
                                                      file_name=c('mental_health2011.xlsx',
                                                                  'mental_health2012.xlsx',
                                                                  'mental_health2013.xlsx'),
-                                                     url=NA,
+                                                     url=c('https://www.health.govt.nz/system/files/documents/publications/mh_201011_revised_mar2020.xlsx',
+                                                          'https://www.health.govt.nz/system/files/documents/publications/mh_201112_revised_mar2020.xlsx',
+                                                          'https://www.health.govt.nz/system/files/documents/publications/mh2012-13_revisedmarch2020.xlsx'),
                                                      separator='&')
+    get_unknown_years(file_metadata_df %>% filter(year<=2013))
 
     return(file_metadata_df)
 }
 
+get_legacy_files <- function(){
+    url <- 'https://www.health.govt.nz/publication/mental-health-service-use-new-zealand-2001-02-2006-07'
+    mental_health_data_urls_all_new_years <- url %>% 
+                                              read_html() %>%
+                                              html_element('.view-file-attachments-revisioning') %>%
+                                              html_elements("a") %>%
+                                              html_attrs() %>% str_c('', .)
+    start_year = 2002
+    for (donwload_url in mental_health_data_urls_all_new_years){
+        download.file(url=donwload_url, destfile=get_filename(paste('mental_health', start_year, '.xls', sep='')))
+        start_year<- start_year +1
+    }
+}
+
+get_files_outside_norm <- function(){
+    download.file(url='https://www.health.govt.nz/system/files/documents/publications/mental-health-addiction-service-use-2009-10.xls',
+                  destfile=get_filename('mental_health2010.xls'))
+    download.file(url='https://www.health.govt.nz/system/files/documents/publications/mh2007-08-app-final.xls',
+                  destfile=get_filename('mental_health2008.xls'))
+}
+
+get_unknown_years <- function(unknown_years){
+    for (i in 1:nrow(unknown_years)) {
+        row <- unknown_years[i,]
+            download.file(url=row$url, destfile=get_filename(row$file_name))
+    }
+}
 download_xlsx_file <- function(heath_url, file_name){
     download_url <- heath_url %>% 
                     read_html() %>%
@@ -79,15 +110,29 @@ get_table_positions <- function(file_metadata_df){
     #get metadata from one of the files.
     first_file = file_metadata_df[1,]
 
-    age_group_col_names <-  first_file$file_name %>% read_excel(sheet = build_sheet_name('table1', '2', first_file$separator),
-                                                                range = cell_rows(4:4)) %>% colnames()
-    add_sex_totl_age_group_col_names <- c('gender', "Total", age_group_col_names)
+    age_group_col_names <- paste(DATASET_FOLDER, first_file$file_name, sep='/') %>% read_excel(sheet=build_sheet_name('table1', 
+                                                                                                                      '2',
+                                                                                                                      first_file$separator),
+                                                                                               range=cell_rows(4:4)) %>% 
+                                                                                    colnames()
 
 
     table_1_2_positions <- tibble(ethnic_group=c('Maori', 'Pacific', 'Asian', 'Other'),
                                   range=c('B9:U10', 'B12:U13', 'B15:U16', 'B18:U19'))
     
     return(table_1_2_positions)
+}
+
+get_age_column_names_table1 <- function(file_metadata_df){
+        first_file = file_metadata_df[1,]
+        age_group_col_names <-   paste(DATASET_FOLDER, first_file$file_name, sep='/') %>% read_excel(sheet=build_sheet_name('table1', 
+                                                                                                                        '2',
+                                                                                                                        first_file$separator),
+                                                                                                 range=cell_rows(4:4) )%>% 
+                                                                                  colnames()
+        add_sex_totl_age_group_col_names <- c('gender', "Total", age_group_col_names)
+
+        return (add_sex_totl_age_group_col_names)
 }
 
 #get data from 2010 file for spcific sheet range etc.
@@ -135,9 +180,9 @@ get_clients_by_gender_ethnic_group <- function(file_metadata, table_positions, c
             sheet <- build_sheet_name("table1", "2", file_metadata$separator)
            
         }
-        ethnic_group_df <- file_metadata$file_name %>% read_excel(sheet=sheet,
+        ethnic_group_df <- paste(DATASET_FOLDER, file_metadata$file_name, sep='/') %>% read_excel(sheet=sheet,
                                                        range = range,
-                                                       col_names = add_sex_totl_age_group_col_names)  
+                                                       col_names = columns)  
         
         ethnic_group_df <- ethnic_group_df %>% add_column(ethnic_group=row$ethnic_group, year=file_metadata$year)
         
@@ -154,18 +199,32 @@ get_clients_by_gender_ethnic_group <- function(file_metadata, table_positions, c
 
 get_all_year_clients_by_gender_ethnic_group <- function(clients_by_age_ethnic_group_df, file_metadata_df){
     table_positions <- get_table_positions(file_metadata_df)
+    age_group_col_names = get_age_column_names_table1(file_metadata_df)
     for (i in 1:nrow(file_metadata_df)){
         row <- file_metadata_df[i,]
         clients_by_age_ethnic_group_df <- clients_by_age_ethnic_group_df %>% 
-                                          add_row(g\
-                                                  et_clients_by_gender_ethnic_group(row,
+                                          add_row(get_clients_by_gender_ethnic_group(row,
                                                                                      table_positions,
-                                                                                     add_sex_totl_age_group_col_names))
+                                                                                     age_group_col_names))
     }
     return(clients_by_age_ethnic_group_df) 
     
 }
 
+# 2010 File is different to every other file, so we need a different parser for it.
+
+get_2010_client_ages <- function(){
+        file_2010 <- paste(DATASET_FOLDER, "mental_health2010.xls", sep='/')
+
+        client_ages_group_2010 <- file_2010 %>% read_excel(sheet = "T7 Nos Rates 0910 EthSexAge",  range='A4:A22') 
+        colnames(client_ages_group_2010) <- c('age_group')
+
+        data_2010_clients <- get_2010_dfs(file_2010, "T7 Nos Rates 0910 EthSexAge", 'B4:B22', 'Male', 'Maori', client_ages_group_2010 ) %>% 
+                                rbind(get_2010_dfs(file_2010, "T7 Nos Rates 0910 EthSexAge", 'D4:D22', 'Female', 'Maori', client_ages_group_2010 )) %>% 
+                                rbind(get_2010_dfs(file_2010, "T7 Nos Rates 0910 EthSexAge", 'H4:H22', 'Male', 'Unknown', client_ages_group_2010 )) %>% 
+                                rbind(get_2010_dfs(file_2010, "T7 Nos Rates 0910 EthSexAge", 'H4:H22', 'Female', 'Unknown', client_ages_group_2010 )) %>% 
+                                mutate('year'=2010)
+}
 
 
 #make all df 2002-2007 data tidy
@@ -197,16 +256,40 @@ file_metadata_2001_2007 <- tibble(year=2002:2008,
 get_2001_2007_file_df <- function(file_name, year_num){
     file_metadata <- file_metadata_2001_2007 %>% filter(year==year_num)
     #get client age group names
-    client_ages_sheeta1 <- file_name %>% read_excel(sheet=file_metadata$sheet,
+    client_ages_sheeta1 <- get_filename(file_name) %>% read_excel(sheet=file_metadata$sheet,
                                                     range=file_metadata$titles) %>% colnames()
     col_names_seen_by_age_sheeta1  <- c('ethnic_group', 'gender', 'amount', client_ages_sheeta1)
     
     #get data from the file rename with names before
-    client_seen_by_age_data_a1 <-  file_name %>% read_excel(sheet=file_metadata$sheet,
+    client_seen_by_age_data_a1 <-  get_filename(file_name) %>% read_excel(sheet=file_metadata$sheet,
                                                             range=file_metadata$range)
     colnames(client_seen_by_age_data_a1) <- col_names_seen_by_age_sheeta1 
 
     return(get_df_tidy(client_seen_by_age_data_a1, year_num))
+}
+
+clean_ages <- function(df){
+    df <- df %>% mutate(age_group=gsub("0–4","0–", age_group)) %>%  
+                                     mutate(age_group=gsub("0–5", "5–", age_group)) %>%  
+                                     mutate(age_group=gsub("5–9", "10–", age_group)) %>%  
+                                     mutate(age_group=gsub("10–14", "15–", age_group)) %>%  
+                                     mutate(age_group=gsub("15–19", "20–", age_group)) %>%  
+                                     mutate(age_group=gsub("20–24", "25–", age_group)) %>%  
+                                     mutate(age_group=gsub("25–29", "30–", age_group)) %>%  
+                                     mutate(age_group=gsub("30–34", "35–", age_group)) %>%  
+                                     mutate(age_group=gsub("35–39", "40–", age_group)) %>%  
+                                     mutate(age_group=gsub("40–44", "45–", age_group)) %>%  
+                                     mutate(age_group=gsub("45–49", "50–", age_group)) %>%  
+                                     mutate(age_group=gsub("50–54", "55–", age_group)) %>%  
+                                     mutate(age_group=gsub("55–59", "60–",  age_group)) %>%  
+                                     mutate(age_group=gsub("60–64", "65–", age_group)) %>%  
+                                     mutate(age_group=gsub("65–69", "70–",  age_group)) %>%  
+                                     mutate(age_group=gsub("70–74", "75–", age_group)) %>%  
+                                     mutate(age_group=gsub("75–79", "80–",  age_group)) %>%  
+                                     mutate(age_group=gsub("80–84", "85+", age_group)) %>%
+                                     mutate(age_group=gsub("55–4", "60–", age_group)) %>% 
+                                     mutate(age_group=gsub("-", "–", age_group))
+    return(df)
 }
 
 #get all data from 2002 to 2007
@@ -255,7 +338,7 @@ normalize_2011_ownwards_column_names <- function(columns) {
 }
 
 get_2002_to_2008_dhb_data <- function(file, sheet, range, year){
-    dhb_df <- file %>% read_excel(sheet=sheet, range=range)
+    dhb_df <- get_filename(file) %>% read_excel(sheet=sheet, range=range)
     colnames(dhb_df)[1] <- 'dhb'
     dhb_df <- dhb_df %>% mutate(dhb=gsub(" District Health Board", "", dhb))
     colnames(dhb_df) <- colnames(dhb_df) %>% normalize_2002_2008_column_names()
@@ -264,7 +347,7 @@ get_2002_to_2008_dhb_data <- function(file, sheet, range, year){
 }
 
 get_2010_dhb_data <- function(filename, sheet, range){
-    dhb_df <- filename %>% read_excel(sheet=sheet, range=range) %>% select(-Rate) 
+    dhb_df <- get_filename(filename) %>% read_excel(sheet=sheet, range=range) %>% select(-Rate) 
     colnames(dhb_df)[1] <- 'dhb'    
     colnames(dhb_df)[2] <- 'amount'
     dhb_df <- dhb_df %>% mutate(origin=dhb) %>% 
@@ -279,8 +362,8 @@ get_2010_dhb_data <- function(filename, sheet, range){
 
 
 get_2011_onwards_dhb_data <- function(file, sheet, header, range, year){
-    header <- file %>% read_excel(sheet=sheet, range=header)
-    dhb_df <- file %>% read_excel(sheet=sheet,range=range)
+    header <- get_filename(file) %>% read_excel(sheet=sheet, range=header)
+    dhb_df <- get_filename(file) %>% read_excel(sheet=sheet,range=range)
     if (any(is.na(dhb_df[1,]))){
         colnames(dhb_df) <- paste(colnames(header), as.character(dhb_df[1,]))
         dhb_df<- dhb_df[-1,]
@@ -303,7 +386,7 @@ get_2011_onwards_dhb_data <- function(file, sheet, header, range, year){
 
 
 get_service_data <- function(filename, sheet, range, year, cols=NULL){
-   data <- filename %>% read_excel(sheet=sheet, range=range) 
+   data <- get_filename(filename) %>% read_excel(sheet=sheet, range=range) 
    colnames(data)[1] <- 'activity'
    colnames(data)[2] <- 'gender'
    colnames(data)[3] <- 'Total'
