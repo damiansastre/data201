@@ -1,0 +1,54 @@
+==========================================
+NZ Mental Health Datasets
+==========================================
+
+Damian Sastre
+Menglong Shi
+
+University of Canterbury
+New Zealand
+
+=========================================
+Files
+=========================================
+
+	- clients_by_dhb.csv
+	- clients_by_gender_ethnicity_age.csv
+	- clients_by_service.csv
+	
+=========================================
+Dataset characteristics
+=========================================	
+
+- clients_by_dhb.csv
+	- id (dbl): record index.
+    - origin (char): District of users domicile.
+    - destination (char): District where the service took place.
+    - amount (dbl): total amount of users for the row
+    - year (dbl): year (2002 to 2020)
+    
+
+- clients_by_gender_ethnicity_age.csv
+	- id (dbl) record index.
+    - year (dbl): year (2002 to 2020) in YYYY format.
+    - gender (char): Female or Male
+    - ethnic_group (char): Maori, Asian, Pacific, Other, Unknown (for 2010 only)
+    - age_group (char): Age groups in gaps of 5 years from 0- to 85+ , format: {number}{-/+}
+    - amount (dbl): total amount of users for the row
+    
+
+- clients_by_service.csv
+	- id (dbl): record index.
+    - activity (char) : Service given by the DHB
+    - gender (char) : Female or Male.
+    - year :year (2002 to 2020) in YYYY format.
+    - age_group (char): Age groups in gaps of 5 years from 0- to 85+ , format: {number}{-/+}
+    - amount (dbl): total amount of users for the row
+    
+
+
+=========================================
+Contact
+=========================================
+	
+For further information about this dataset please contact Damian Sastre or Menglong Shi.
