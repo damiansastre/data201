@@ -30,3 +30,7 @@ Datasets can be accessed in the following kaggle link: [Mental Health New Zealan
 
 Kaggle also provides insight to the file column types, it has been updated with metadata from the datasets for further analysis.
 
+
+# Github Repository
+
+Code and all the information about this project is hosted in this [repository](https://github.com/tagercito/data201)
