@@ -2,27 +2,27 @@
 
 # Folders
 
-**input** contains downloaded files for cache reasons.
-**output** contains output datasets after wrangling.
-**lib** contains library used to gather the datasets.
-**graphs** contains visualizations from the datasets.
+**input** : Contains downloaded files for cache reasons.
+**output** : Contains output datasets after wrangling.
+**lib** : Contains library used to gather the datasets.
+**graphs** : Contains visualizations from the datasets.
 
 # Notebooks
 
-**report.ipynb** Contains the report of the data gathered.
-**usage.ipynb** Contains the notebook used to scrape and wrangle all the data.
+**report.ipynb** : Contains the report of the data gathered.
+**usage.ipynb** : Contains the notebook used to scrape and wrangle all the data.
 
 # Presentation
 
-**nz_mental_health.pdf** Contains the presentation given to the class.
+**nz_mental_health.pdf** : Contains the presentation given to the class.
 
 # Metadata
 
-**dataset_dictionary.txt** Contains information about the exported datasets
+**dataset_dictionary.txt** : Contains information about the exported datasets
 
 # Dictionary
 
-**dataset_dictionary.txt** Contains metadata information about the datasets. 
+**dataset_dictionary.txt** : Contains metadata information about the datasets. 
 
 # Access to datasets Online
 
