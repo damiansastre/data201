@@ -1,0 +1,310 @@
+commit 37f470cf634d52b0840869405cbbcea501a75c28
+Author: Damian Sastre <tagerr@gmail.com>
+Date:   Sun Oct 31 16:40:55 2021 +1300
+
+    adding documentation to lib
+
+commit 1f7fe6bcd671c10a276fe99d4218861aceab60fa
+Author: Damian Sastre <tagerr@gmail.com>
+Date:   Sun Oct 31 13:56:26 2021 +1300
+
+    adding more documentation for usage.
+
+commit 332a856a5549512b5eed3dcfbf6156f61d5ca5e5
+Author: Damian Sastre <tagerr@gmail.com>
+Date:   Sat Oct 30 14:31:47 2021 +1300
+
+    tidy up
+
+commit 7d90840c3c2826cbb0591506ea89ce1d4892e0d3
+Author: Damian Sastre <tagerr@gmail.com>
+Date:   Thu Oct 28 23:28:07 2021 +1300
+
+    tidy up project
+
+commit 8d4d11c5dcb93508b0016c0a456a1c8abf45a951
+Author: Damian Sastre <tagerr@gmail.com>
+Date:   Thu Oct 28 20:43:34 2021 +1300
+
+    removing unnecesary group folter
+
+commit 4785952745cbf0882c287769338c830343978a7d
+Author: Damian Sastre <tagerr@gmail.com>
+Date:   Thu Oct 28 20:42:55 2021 +1300
+
+    removing unnecesary files
+
+commit 4cac93b609352ebc70c59a5a381170c295bc51af
+Author: Mushan <mushan@MushandeMacBook-Pro.local>
+Date:   Tue Oct 26 12:25:53 2021 +1300
+
+    abstruct all function into all_functions.r file
+
+commit c8e6971053f48f1e338b659df00b4eff04e4d52a
+Author: Damian Sastre <tagerr@gmail.com>
+Date:   Tue Oct 26 02:27:20 2021 +1300
+
+    adding pttx
+
+commit adce15b91a6bf6e4bd975318d349b1905c93a9c2
+Author: Mushan <mushan@MushandeMacBook-Pro.local>
+Date:   Mon Oct 25 19:45:29 2021 +1300
+
+    morai to MaoriMaoriMāori
+
+commit d6752290e12e9a08951e088bc9f137262b672bed
+Author: Damian Sastre <tagerr@gmail.com>
+Date:   Mon Oct 25 18:37:55 2021 +1300
+
+    adding changes to new grapsh and parsers
+
+commit 526929633f9e0d122392151427579d399a832866
+Merge: 6285142 3371ca9
+Author: Damian Sastre <tagerr@gmail.com>
+Date:   Sun Oct 24 16:39:34 2021 +1300
+
+    Merge branch 'master' of github.com:tagercito/data201
+
+commit 628514272623058b06c4026ab91dce8cd5e7c438
+Author: Damian Sastre <tagerr@gmail.com>
+Date:   Sun Oct 24 16:39:19 2021 +1300
+
+    adding project data
+
+commit 3371ca9552e82da3260745e3defd6dc930bd6657
+Author: Mushan <mushan@MushandeMacBook-Pro.local>
+Date:   Sun Oct 24 13:17:00 2021 +1300
+
+    add plot on age_group and year
+
+commit 4111d5b653b62e8d76b4e99d6a3a50b328b7b3e7
+Author: Damian Sastre <tagerr@gmail.com>
+Date:   Sun Oct 24 11:57:17 2021 +1300
+
+    adding changes to datasets
+
+commit 2e2110760df029e8f146c2f8d656b2e5698cb15c
+Author: Mushan <mushan@MushandeMacBook-Pro.local>
+Date:   Mon Oct 18 21:39:36 2021 +1300
+
+    dnb added
+
+commit 20386a61b5f1ccab1e32fe9549e5889ae0225cf3
+Author: Mushan <mushan@MushandeMacBook-Pro.local>
+Date:   Mon Oct 18 16:04:49 2021 +1300
+
+    fix edit age_group
+
+commit 57bb7d3d7ccad4a278aa2a4121b9634190d0fd91
+Author: Mushan <mushan@MushandeMacBook-Pro.local>
+Date:   Mon Oct 18 15:24:21 2021 +1300
+
+    add 2010 data
+
+commit 0240f8d0d4d36b7716381b65b3572253d9eb4cdf
+Author: Damian Sastre <tagerr@gmail.com>
+Date:   Mon Oct 18 14:31:57 2021 +1300
+
+    remoing files
+
+commit 5ce2e4ecc30c83eae4445b58bd1c74880f4479b8
+Author: Damian Sastre <tagerr@gmail.com>
+Date:   Mon Oct 18 14:28:57 2021 +1300
+
+    adding new vars
+
+commit 78fd08a0a8449ebe84a07286ac28fa1e7ca7caca
+Author: Mushan <mushan@MushandeMacBook-Pro.local>
+Date:   Mon Oct 18 00:09:45 2021 +1300
+
+    combine 2002-2020 first table
+
+commit f31f8800cdbc148024b8e18595d4afe064361ee1
+Author: Mushan <mushan@MushandeMacBook-Pro.local>
+Date:   Sun Oct 17 21:25:21 2021 +1300
+
+    add long fromate of sheet 17 and 23
+
+commit 304ed1a4082193c96dc8afe478198dddb41d9164
+Author: Damian Sastre <tagerr@gmail.com>
+Date:   Sun Oct 17 18:55:24 2021 +1300
+
+    adding new table data
+
+commit ae42e30e6069d5b397cef56a4efc1c315cc16745
+Merge: cf60cda c367e9c
+Author: Damian Sastre <tagerr@gmail.com>
+Date:   Sun Oct 17 12:13:53 2021 +1300
+
+    Merge branch 'master' of github.com:tagercito/data201
+
+commit cf60cdaa0d15f6e9fbb557111c217f0e45c8b039
+Author: Damian Sastre <tagerr@gmail.com>
+Date:   Sun Oct 17 12:09:16 2021 +1300
+
+    moving my changes to another file to not break current notebook
+
+commit 8c41b254c8efaebfb3daebd3c83eb3f250488dcd
+Author: Damian Sastre <tagerr@gmail.com>
+Date:   Sun Oct 17 12:07:28 2021 +1300
+
+    Adding new parsers for file and separator data for graphs.
+
+commit c367e9c40376b8e95c2e72e0508ab25cb71a1b96
+Author: Mushan <mushan@MushandeMacBook-Pro.local>
+Date:   Wed Oct 13 15:26:29 2021 +1300
+
+    now we have all the data frame for file one of all sheets
+
+commit 5d30acf5c35efe4c676eade258ffee04eea25a80
+Author: Mushan <mushan@MushandeMacBook-Pro.local>
+Date:   Wed Oct 13 13:50:02 2021 +1300
+
+    Download files and get data for sheet1 and 2
+
+commit 6394376579da0e52b728bbd0e4eef35e8065fe6a
+Author: Damian Sastre <tagerr@gmail.com>
+Date:   Tue Oct 12 10:42:29 2021 +1300
+
+    adding reference file
+
+commit 74c176b3c64381d9edd06634f0c96af4d1926f40
+Author: Damian Sastre <tagerr@gmail.com>
+Date:   Tue Oct 12 09:56:02 2021 +1300
+
+    adding final version of assignment 2
+
+commit c21f6dab4165568ce005c6306199f5261da7063d
+Author: Mushan <mushan@MushandeMacBook-Pro.local>
+Date:   Mon Oct 11 23:42:23 2021 +1300
+
+    grap all data for every year and download every xlsx file
+
+commit 3e190189ffc3393a13d5cb365ed42809315bcc30
+Author: Damian Sastre <tagerr@gmail.com>
+Date:   Mon Oct 11 16:51:16 2021 +1300
+
+    adding excel for group project
+
+commit e5658569a78360d072bf888a5e0af3e0d1fe8187
+Author: Damian Sastre <tagerr@gmail.com>
+Date:   Mon Oct 11 16:49:27 2021 +1300
+
+    almost final touches
+
+commit 6cff11c9d9907a644262002fe6cf7f2c43b8451c
+Author: Damian Sastre <tagerr@gmail.com>
+Date:   Sun Oct 10 17:22:59 2021 +1300
+
+    probably final version
+
+commit 088414867934d963a435f230f80f294e27c3cbed
+Author: Drogomeng <947659002@qq.com>
+Date:   Fri Oct 8 17:34:22 2021 +1300
+
+    Finished plotting
+
+commit ae37804127e3f6fba165377681da63083459caef
+Author: Damian Sastre <tagerr@gmail.com>
+Date:   Fri Oct 8 13:34:08 2021 +1300
+
+    adding lecturer and subject data
+
+commit 9a990fb4de2f63c40df8b734eda4aec7d0d4a992
+Author: Damian Sastre <tagerr@gmail.com>
+Date:   Thu Oct 7 14:12:08 2021 +1300
+
+    iadding dumps
+
+commit acc1588377ae66c143670b7eeab63e957bec4e50
+Author: Damian Sastre <tagerr@gmail.com>
+Date:   Wed Oct 6 17:29:02 2021 +1300
+
+    adding new subject and lecturer data
+
+commit c3d8820aab2b3d4697d3732d741f261feac795dc
+Author: Damian Sastre <tagerr@gmail.com>
+Date:   Tue Oct 5 22:30:28 2021 +1300
+
+    new get lecturer functions
+
+commit b3d10fb420c60ef5e0a476cfe91a115a3490f487
+Merge: 3886db7 6f8ae11
+Author: Drogomeng <947659002@qq.com>
+Date:   Tue Oct 5 14:15:37 2021 +1300
+
+    it works for 10 subjects
+
+commit 3886db79a934168211326d6405aa6fb597d21f89
+Author: Drogomeng <947659002@qq.com>
+Date:   Tue Oct 5 14:13:51 2021 +1300
+
+    it works for 10 subjects
+
+commit 6f8ae11a642e34f9259217cbaa0e64107867f8e4
+Author: Damian Sastre <tagerr@gmail.com>
+Date:   Mon Oct 4 22:27:36 2021 +1300
+
+    adding new function
+
+commit 9b4c464d2c8bda0ba4384cc7f90221357cfcc688
+Author: Drogomeng <947659002@qq.com>
+Date:   Mon Oct 4 22:02:44 2021 +1300
+
+    fixed a  bug when the subject have no course
+
+commit c3547d3f76e957b52d6c482f6b91788d44bae6ac
+Author: Drogomeng <947659002@qq.com>
+Date:   Mon Oct 4 21:40:50 2021 +1300
+
+    fix a bit in last block
+
+commit b88752f5926e637bc96be11337a3934c23d8b37c
+Author: Drogomeng <947659002@qq.com>
+Date:   Mon Oct 4 19:35:00 2021 +1300
+
+    now we can get all courses from all subject
+
+commit 96d6a6e90e1db6e5be717d19056762a1930de080
+Merge: 8ff7c2d 6aeca33
+Author: Drogomeng <947659002@qq.com>
+Date:   Sun Oct 3 23:25:03 2021 +1300
+
+    Merge branch 'master' of https://github.com/tagercito/data201
+    x# the commit.
+
+commit 8ff7c2d5f2a520186ab48a460d7a9361c32563c1
+Author: Drogomeng <947659002@qq.com>
+Date:   Sun Oct 3 23:16:27 2021 +1300
+
+    Try again
+
+commit da74c6959efe6338cd14481fa54a7db06316770e
+Author: Drogomeng <947659002@qq.com>
+Date:   Sun Oct 3 21:14:00 2021 +1300
+
+    test
+
+commit 6aeca33b67c4e7063bf9c1e5d42fc82b5dc948e8
+Author: Shi Drogo <68044354+Drogomeng@users.noreply.github.com>
+Date:   Sun Oct 3 20:50:54 2021 +1300
+
+    Add files via upload
+
+commit a919896b4736325ada6641604f253231ba3be28b
+Author: Menglong Shi <msh217@cssecs3.canterbury.ac.nz>
+Date:   Sun Oct 3 20:34:45 2021 +1300
+
+    ass2
+
+commit b049015e50133522420e674dc6eaa2a89a282416
+Author: Drogo Shi <msh217@canterbury.ac.nz>
+Date:   Mon Sep 27 16:14:44 2021 +1300
+
+    "read me"
+
+commit cee748a89ade30be86e4f8e755c8a9b261f4f5c0
+Author: Damian Sastre <tagerr@gmail.com>
+Date:   Mon Sep 20 17:05:19 2021 +1200
+
+    Initial commit
